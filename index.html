@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reset Plan — Private Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F2;
+    --paper-deep:#ECEEE8;
+    --ink:#1E2A26;
+    --ink-soft:#56625C;
+    --ink-faint:#8A938C;
+    --teal:#2F5D52;
+    --teal-deep:#234A41;
+    --clay:#B5824F;
+    --line:#D8DCD3;
+    --line-soft:#E4E7DF;
+    --field:#FBFCFA;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- progress bar ---- */
+  .progress-track{
+    position:fixed;top:0;left:0;right:0;height:3px;
+    background:transparent;z-index:50;
+  }
+  .progress-fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--teal),var(--clay));
+    transition:width .15s ease-out;
+  }
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 28px 120px;
+  }
+
+  /* ---- hero ---- */
+  .hero{
+    padding:104px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--clay);
+    margin:0 0 26px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(44px,8vw,76px);
+    line-height:1.02;
+    letter-spacing:-.015em;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--teal);
+  }
+  .hero .sub{
+    font-family:'Fraunces',serif;
+    font-size:clamp(19px,3vw,23px);
+    font-weight:400;
+    color:var(--ink-soft);
+    margin:0 0 32px;
+    max-width:46ch;
+    line-height:1.4;
+  }
+  .lede{
+    max-width:54ch;
+    color:var(--ink-soft);
+    font-size:17px;
+    margin:0 0 36px;
+  }
+  .lede strong{color:var(--ink);font-weight:600;}
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 14px;
+    list-style:none;padding:0;margin:0;
+  }
+  .meta li{
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:100px;
+    padding:7px 15px;
+  }
+  .meta li b{color:var(--teal);font-weight:600;}
+
+  /* ---- sections with the "spine" ---- */
+  .sections{position:relative;}
+  .sections::before{
+    content:"";
+    position:absolute;
+    left:19px;top:46px;bottom:60px;
+    width:1px;
+    background:var(--line);
+  }
+  .section{
+    position:relative;
+    padding:60px 0 8px 76px;
+  }
+  .node{
+    position:absolute;
+    left:0;top:52px;
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--paper);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:16px;font-weight:600;
+    color:var(--teal);
+    z-index:2;
+  }
+  .section-kicker{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--clay);
+    margin:0 0 12px;
+  }
+  .section h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(28px,4.5vw,36px);
+    line-height:1.1;
+    letter-spacing:-.01em;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .section .purpose{
+    color:var(--ink-soft);
+    font-size:16px;
+    margin:0 0 34px;
+    max-width:52ch;
+    font-style:italic;
+  }
+
+  /* ---- fields ---- */
+  .field{margin-bottom:30px;}
+  .field:last-child{margin-bottom:8px;}
+  .field label.q{
+    display:block;
+    font-weight:600;
+    font-size:16.5px;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .field .help{
+    display:block;
+    font-size:14px;
+    color:var(--ink-faint);
+    margin-bottom:12px;
+    line-height:1.45;
+  }
+  .field .req{color:var(--clay);font-weight:600;}
+
+  input[type=text],
+  input[type=email],
+  select,
+  textarea{
+    width:100%;
+    font-family:inherit;
+    font-size:16px;
+    color:var(--ink);
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  textarea{resize:vertical;min-height:120px;line-height:1.55;}
+  textarea.tall{min-height:150px;}
+  input::placeholder,textarea::placeholder{color:#AEB6AE;}
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--teal);
+    background:var(--white);
+    box-shadow:0 0 0 4px rgba(47,93,82,.12);
+  }
+  select{
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232F5D52' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 16px center;
+    padding-right:44px;
+    cursor:pointer;
+  }
+
+  /* checkbox group */
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.choices{grid-template-columns:1fr;}}
+  .choice{
+    position:relative;
+    display:flex;align-items:flex-start;gap:11px;
+    border:1px solid var(--line);
+    background:var(--field);
+    border-radius:12px;
+    padding:13px 15px;
+    cursor:pointer;
+    font-size:15.5px;
+    line-height:1.4;
+    transition:border-color .16s ease, background .16s ease;
+  }
+  .choice:hover{border-color:#BFC8BE;}
+  .choice input{
+    appearance:none;margin:0;flex:none;
+    width:20px;height:20px;border-radius:6px;
+    border:1.5px solid var(--line);
+    background:var(--white);
+    cursor:pointer;
+    transition:all .16s ease;
+    margin-top:1px;
+  }
+  .choice input:checked{
+    background:var(--teal);border-color:var(--teal);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:center;
+  }
+  .choice:has(input:checked){border-color:var(--teal);background:rgba(47,93,82,.05);}
+  .choice input:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(47,93,82,.14);}
+
+  /* scale */
+  .scale{display:flex;gap:8px;flex-wrap:wrap;}
+  .scale-opt{flex:1;min-width:44px;}
+  .scale-opt input{appearance:none;position:absolute;opacity:0;}
+  .scale-opt label{
+    display:block;text-align:center;
+    border:1px solid var(--line);
+    background:var(--field);
+    border-radius:11px;
+    padding:14px 0;
+    font-weight:600;font-size:16px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:all .16s ease;
+  }
+  .scale-opt input:checked + label{
+    background:var(--teal);border-color:var(--teal);color:var(--white);
+  }
+  .scale-opt input:focus-visible + label{box-shadow:0 0 0 4px rgba(47,93,82,.14);}
+  .scale-ends{
+    display:flex;justify-content:space-between;
+    font-size:13px;color:var(--ink-faint);margin-top:9px;
+  }
+
+  /* ---- closing / submit ---- */
+  .closing{
+    margin-top:64px;
+    padding:44px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:20px;
+    text-align:center;
+  }
+  .closing h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;font-size:26px;
+    margin:0 0 12px;color:var(--ink);
+  }
+  .closing p{
+    color:var(--ink-soft);
+    max-width:46ch;margin:0 auto 28px;
+    font-size:16px;
+  }
+  .submit{
+    appearance:none;border:none;cursor:pointer;
+    font-family:inherit;font-size:17px;font-weight:600;
+    color:var(--white);
+    background:var(--teal);
+    border-radius:100px;
+    padding:17px 42px;
+    transition:background .18s ease, transform .12s ease;
+  }
+  .submit:hover{background:var(--teal-deep);}
+  .submit:active{transform:translateY(1px);}
+  .submit:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(47,93,82,.25);}
+  .fineprint{
+    margin-top:18px;font-size:13px;color:var(--ink-faint);
+  }
+
+  /* confirmation */
+  .thanks{
+    display:none;
+    text-align:center;
+    padding:120px 20px;
+  }
+  .thanks.show{display:block;}
+  .thanks .mark{
+    width:64px;height:64px;border-radius:50%;
+    background:var(--teal);color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 28px;font-size:30px;
+  }
+  .thanks h2{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:38px;margin:0 0 14px;color:var(--ink);
+  }
+  .thanks p{color:var(--ink-soft);max-width:44ch;margin:0 auto;font-size:17px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto !important;transition:none !important;}
+  }
+
+  /* reveal */
+  .section{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+  .section.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){.section{opacity:1;transform:none;}}
+
+  @media(max-width:600px){
+    .wrap{padding:0 20px 90px;}
+    .hero{padding:78px 0 48px;}
+    .sections::before{left:15px;}
+    .section{padding-left:0;padding-top:48px;}
+    .node{position:relative;top:0;left:0;margin-bottom:20px;}
+    .sections::before{display:none;}
+    .closing{padding:32px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="eyebrow">Creating Through Energy · Private Intake</p>
+    <h1>The <em>Reset</em> Plan</h1>
+    <p class="sub">Before I build your plan, I need to understand your set-point completely.</p>
+    <p class="lede">This is thorough on purpose. The questions below go deeper than anyone has probably ever asked you about money — and that's the point. <strong>The more honestly you answer, the more precisely I can show you exactly where you're stuck and the way out.</strong> There are no wrong answers here. Only the truth, written down.</p>
+    <ul class="meta">
+      <li>⏱ About <b>15 minutes</b></li>
+      <li>🔒 Completely <b>confidential</b></li>
+      <li>👁 Read personally <b>by Ramon</b></li>
+    </ul>
+  </header>
+
+  <form id="intake" class="sections" action="https://formspree.io/f/mvzjznol" method="POST" novalidate>
+
+    <!-- 01 -->
+    <section class="section">
+      <div class="node">01</div>
+      <p class="section-kicker">The Basics</p>
+      <h2>Let's start with you</h2>
+      <p class="purpose">So I know who I'm building this for — and where to send it.</p>
+
+      <div class="field">
+        <label class="q" for="name">Your full name <span class="req">*</span></label>
+        <input type="text" id="name" name="name" placeholder="First and last" required>
+      </div>
+      <div class="field">
+        <label class="q" for="email">Best email to send your plan <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" required>
+      </div>
+      <div class="field">
+        <label class="q" for="trigger">In one sentence — what made you open this today?</label>
+        <span class="help">Don't overthink it. The first thing that comes up is usually the real thing.</span>
+        <input type="text" id="trigger" name="trigger" placeholder="Be honest…">
+      </div>
+      <div class="field">
+        <label class="q" for="hope">When you close my video, what would you most want to finally have clarity on?</label>
+        <textarea id="hope" name="hope" placeholder="What would make this worth it for you?"></textarea>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="section">
+      <div class="node">02</div>
+      <p class="section-kicker">The Number</p>
+      <h2>Where your set-point sits today</h2>
+      <p class="purpose">Your nervous system has chosen a number it believes is safe. First, let's find it.</p>
+
+      <div class="field">
+        <label class="q" for="income">Roughly where does your income sit right now?</label>
+        <span class="help">Ranges are fine — I'm looking for the altitude, not the exact figure.</span>
+        <select id="income" name="income">
+          <option value="" disabled selected>Choose the closest…</option>
+          <option>Under $5K / month</option>
+          <option>$5K–$10K / month</option>
+          <option>$10K–$20K / month</option>
+          <option>$20K–$40K / month</option>
+          <option>$40K–$80K / month</option>
+          <option>$80K+ / month</option>
+          <option>It varies wildly month to month</option>
+          <option>I'd rather describe it below</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="q" for="howlong">How long have you been hovering around roughly this same number?</label>
+        <input type="text" id="howlong" name="howlong" placeholder="Months? Years? Be specific if you can.">
+      </div>
+      <div class="field">
+        <label class="q" for="target">What number have you been trying to reach… and keep not reaching?</label>
+        <span class="help">The one that feels just out of grasp, no matter what you try.</span>
+        <input type="text" id="target" name="target" placeholder="The number that keeps slipping away">
+      </div>
+      <div class="field">
+        <label class="q" for="triple">If your income tripled this year — and stayed there — what would actually change in your life?</label>
+        <span class="help">Go beyond money. What changes in your days, your body, your relationships, your sense of self?</span>
+        <textarea id="triple" name="triple" placeholder="Paint me the picture…"></textarea>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="section">
+      <div class="node">03</div>
+      <p class="section-kicker">The Pattern</p>
+      <h2>The snap-back</h2>
+      <p class="purpose">When you rise above your set-point, something pulls you back. Let's catch it in the act.</p>
+
+      <div class="field">
+        <label class="q" for="derail">Tell me about the last time things started really working… and then something derailed it.</label>
+        <span class="help">The deal that fell through. The momentum that fizzled. The "off" stretch right as you were breaking through.</span>
+        <textarea id="derail" name="derail" class="tall" placeholder="What happened? Walk me through it."></textarea>
+      </div>
+      <div class="field">
+        <label class="q">When you get close to a breakthrough, what tends to show up? <span class="help" style="display:inline">(check any that ring true)</span></label>
+        <div class="choices" style="margin-top:12px">
+          <label class="choice"><input type="checkbox" name="sabotage" value="deal"> A deal or opportunity falls apart</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="sick"> I get sick or exhausted</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="freeze"> I freeze and stop taking action</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="conflict"> Drama or conflict erupts</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="distract"> I get "busy" with something else</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="overspend"> Money goes out as fast as it comes in</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="doubt"> A wave of doubt or unworthiness hits</label>
+          <label class="choice"><input type="checkbox" name="sabotage" value="shrink"> I quietly pull back and play small</label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q" for="ceiling">Is there a "ceiling" moment that keeps repeating across your life? Describe it.</label>
+        <textarea id="ceiling" name="ceiling" placeholder="The pattern you've watched happen more than once…"></textarea>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="section">
+      <div class="node">04</div>
+      <p class="section-kicker">The Body</p>
+      <h2>What your system does</h2>
+      <p class="purpose">This was never a mindset problem. It lives in your body. Let's listen to it.</p>
+
+      <div class="field">
+        <label class="q" for="bodymoney">When you picture earning far more than you do now, what happens in your body?</label>
+        <span class="help">The tightness in the chest. The "yeah, but." The flutter of dread. The eye-roll. The going-numb. Notice it and describe it.</span>
+        <textarea id="bodymoney" name="bodymoney" placeholder="Where do you feel it, and what does it feel like?"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="receiving">How does your body react when you charge more, receive money, or are truly seen?</label>
+        <span class="help">Receiving and visibility often trigger the same alarm as earning. What comes up for you?</span>
+        <textarea id="receiving" name="receiving" placeholder="Comfortable? Guilty? Anxious? Undeserving? Tell me."></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="baseline">How would you describe your nervous system most days?</label>
+        <span class="help">Calm? Wired? Braced for something? Numb? Running on fumes? There's no wrong answer.</span>
+        <input type="text" id="baseline" name="baseline" placeholder="Your honest baseline">
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="section">
+      <div class="node">05</div>
+      <p class="section-kicker">The Origin</p>
+      <h2>Where it was set</h2>
+      <p class="purpose">A set-point this strong was usually installed long ago. This is the tender part — take your time.</p>
+
+      <div class="field">
+        <label class="q" for="firstmemory">What's your earliest memory involving money?</label>
+        <span class="help">Whatever surfaces first. It's surfacing for a reason.</span>
+        <textarea id="firstmemory" name="firstmemory" placeholder="The first scene that comes to mind…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="modeled">Growing up, what did money feel like in your home? What was modeled for you?</label>
+        <span class="help">Scarcity or plenty? Tension or ease? What did the adults around you believe about money — and about people who had it?</span>
+        <textarea id="modeled" name="modeled" class="tall" placeholder="The emotional climate around money in your childhood…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="unsafe">Was there a moment you learned — even subtly — that having more, being seen, or succeeding wasn't safe?</label>
+        <span class="help">Maybe someone was punished for shining. Maybe you got more than a sibling and felt guilt. Maybe success cost someone you loved. If a scene comes up, describe it.</span>
+        <textarea id="unsafe" name="unsafe" class="tall" placeholder="If something is surfacing right now, write it down — even if it feels small."></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="scared">If you actually achieved everything you're reaching for… what are you secretly scared might happen?</label>
+        <span class="help">This is the question that matters most. Part of you wants it badly — and part of you is bracing against it. What is that part afraid of? Being seen? Envy? Outgrowing people? Becoming someone you don't recognize? Let it speak.</span>
+        <textarea id="scared" name="scared" class="tall" placeholder="The fear underneath the wanting…"></textarea>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="section">
+      <div class="node">06</div>
+      <p class="section-kicker">The Safety Behaviors</p>
+      <h2>The disguised stuckness</h2>
+      <p class="purpose">Your system protects the set-point with behaviors that look exactly like progress. Let's name them.</p>
+
+      <div class="field">
+        <label class="q" for="lookslike">What do you do that looks like progress… but quietly keeps you exactly where you are?</label>
+        <span class="help">Endless researching. Perfecting before launching. Staying "busy." Learning instead of doing. Be ruthlessly honest — this is the good stuff.</span>
+        <textarea id="lookslike" name="lookslike" placeholder="Your most convincing forms of self-protection…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="invested">How many courses, programs, or coaches have you invested in? And what happened with them?</label>
+        <span class="help">No judgment at all — this tells me something important about the real pattern.</span>
+        <textarea id="invested" name="invested" placeholder="What you've tried, and how it tended to go…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="goallin">Finish this sentence: "I'll really go all-in once ______."</label>
+        <input type="text" id="goallin" name="goallin" placeholder="…once what?">
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section class="section">
+      <div class="node">07</div>
+      <p class="section-kicker">The Cost &amp; The Future</p>
+      <h2>What's at stake</h2>
+      <p class="purpose">Two things I need: what staying stuck is costing you, and who you become when it's reset.</p>
+
+      <div class="field">
+        <label class="q" for="cost">What is staying at this number actually costing you?</label>
+        <span class="help">In money, yes — but also in time, energy, freedom, identity, and the years you don't get back. Let yourself feel it.</span>
+        <textarea id="cost" name="cost" class="tall" placeholder="The real price of staying the same…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="futureself">Describe the version of you who has reset this. What's different?</label>
+        <span class="help">Their morning. Their body. Their bank account. The way they carry themselves. The way they receive.</span>
+        <textarea id="futureself" name="futureself" placeholder="Introduce me to who you become…"></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="tried">What have you already tried to fix this — and what helped, what didn't?</label>
+        <textarea id="tried" name="tried" placeholder="So I don't send you down a road you've already walked."></textarea>
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section class="section">
+      <div class="node">08</div>
+      <p class="section-kicker">Readiness &amp; Fit</p>
+      <h2>Where you are right now</h2>
+      <p class="purpose">Last few. These help me speak to exactly where you are — and whether the deeper work is right for you.</p>
+
+      <div class="field">
+        <label class="q">Honestly — how ready are you to do the deeper work, not just learn about it?</label>
+        <div class="scale" style="margin-top:14px" role="radiogroup" aria-label="Readiness from 1 to 5">
+          <div class="scale-opt"><input type="radio" id="r1" name="ready" value="1"><label for="r1">1</label></div>
+          <div class="scale-opt"><input type="radio" id="r2" name="ready" value="2"><label for="r2">2</label></div>
+          <div class="scale-opt"><input type="radio" id="r3" name="ready" value="3"><label for="r3">3</label></div>
+          <div class="scale-opt"><input type="radio" id="r4" name="ready" value="4"><label for="r4">4</label></div>
+          <div class="scale-opt"><input type="radio" id="r5" name="ready" value="5"><label for="r5">5</label></div>
+        </div>
+        <div class="scale-ends"><span>Just exploring</span><span>All in, whatever it takes</span></div>
+      </div>
+      <div class="field">
+        <label class="q" for="aloneorguide">If I showed you the exact path — would you rather walk it alone, or with a guide beside you?</label>
+        <textarea id="aloneorguide" name="aloneorguide" placeholder="There's no right answer. I just want to know how you're wired."></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="timing">Is there anything about right now that makes this the right time… or the wrong time?</label>
+        <input type="text" id="timing" name="timing" placeholder="Life circumstances, readiness, season you're in…">
+      </div>
+      <div class="field">
+        <label class="q" for="anythingelse">Anything you didn't get to say — or were a little scared to write down?</label>
+        <span class="help">This box is yours. The thing you almost didn't mention is often the most important thing of all.</span>
+        <textarea id="anythingelse" name="anythingelse" class="tall" placeholder="Say it here."></textarea>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <div class="closing">
+      <h3>That's everything I need.</h3>
+      <p>I read every word of this myself. Within a few days, you'll receive a personal video where I lay out exactly where your set-point is stuck — and your path forward.</p>
+      <button type="submit" class="submit">Send my intake to Ramon</button>
+      <p class="fineprint">Your answers are private and read only by Ramon.</p>
+    </div>
+
+  </form>
+
+  <!-- CONFIRMATION -->
+  <div class="thanks" id="thanks">
+    <div class="mark">✓</div>
+    <h2>It's in good hands.</h2>
+    <p>Thank you for trusting me with this. Take a breath — the honest work you just did is already the beginning. Watch your inbox; your personal Reset Plan is on its way.</p>
+  </div>
+
+</div>
+
+<script>
+  // progress bar
+  var fill = document.getElementById('progress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    fill.style.width = Math.min(100, Math.max(0, scrolled*100)) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  // section reveal
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.12});
+    document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
+  } else {
+    document.querySelectorAll('.section').forEach(function(s){ s.classList.add('in'); });
+  }
+
+  // submit handling — posts to Formspree in the background, keeps the calm in-page thank-you
+  var form = document.getElementById('intake');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    if(!name || !email){
+      var firstEmpty = !name ? document.getElementById('name') : document.getElementById('email');
+      firstEmpty.focus();
+      firstEmpty.style.borderColor = '#B5824F';
+      return;
+    }
+
+    var btn = form.querySelector('.submit');
+    var originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(res){
+      if(res.ok){
+        form.style.display = 'none';
+        var closing = document.querySelector('.closing');
+        if(closing) closing.style.display = 'none';
+        document.getElementById('thanks').classList.add('show');
+        window.scrollTo({top:0, behavior:'smooth'});
+      } else {
+        return res.json().then(function(data){
+          throw new Error((data && data.errors) ? data.errors.map(function(e){return e.message;}).join(', ') : 'submission failed');
+        });
+      }
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+      var note = document.getElementById('submit-error');
+      if(!note){
+        note = document.createElement('p');
+        note.id = 'submit-error';
+        note.style.cssText = 'color:#B5824F;font-size:14px;margin-top:16px;';
+        note.textContent = "Something went wrong sending your intake. Please check your connection and try again — or email Ramon directly.";
+        btn.parentNode.appendChild(note);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
